@@ -1,0 +1,7 @@
+#!/usr/bin/with-contenv bash
+
+if [[ $TURN_ENABLE -eq 1 ]]; then
+  exec exec turnserver -c /config/turnserver.conf
+fi
+
+

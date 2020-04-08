@@ -2,7 +2,7 @@
 
 # make our folders
 mkdir -p \
-    /config/{nginx/site-confs,keys} \
+    /config/{nginx/site-confs,keys,nginx/module-confs} \
     /run \
     /var/lib/nginx/tmp/client_body \
     /var/tmp/nginx
@@ -69,8 +69,16 @@ if [[ ! -f /config/nginx/site-confs/default ]]; then
     tpl /defaults/default > /config/nginx/site-confs/default
 fi
 
+if [[ ! -f /config/nginx/module-confs/jitsi-meet.conf ]]; then
+    tpl /defaults/jitsi-meet.conf > /config/nginx/module-confs/jitsi-meet.conf
+fi
+
+if [[ ! -f /config/turnserver.conf ]]; then
+    tpl /defaults/turnserver.conf > /config/turnserver.conf
+fi
+
 if [[ ! -f /config/config.js ]]; then
-    cp /defaults/config.js /config/config.js
+    tpl /defaults/config.js > /config/config.js
     sed -i \
         -e "s#jitsi-meet.example.com#$XMPP_DOMAIN#g" \
         -e "s#bosh:.*#bosh: '${PUBLIC_URL}/http-bind',#" \
@@ -109,6 +117,13 @@ if [[ ! -f /config/config.js ]]; then
              -e "s#// transcribingEnabled:.*#transcribingEnabled: true,#" \
              /config/config.js
     fi
+
+    if [[ $TURN_ENABLE -eq 1 || "$TURN_ENABLE" == "true" ]]; then
+        sed -i \
+             -e "s#// useStunTurn:.*,#useStunTurn: true,#" \
+             /config/config.js
+    fi
+
 fi
 
 if [[ ! -f /config/interface_config.js ]]; then

@@ -37,6 +37,9 @@ services:
             - JIBRI_RECORDER_USER
             - JIBRI_RECORDER_PASSWORD
             - ENABLE_RECORDING
+            - TURN_ENABLE
+            - TURN_SECRET
+            - DOCKER_HOST_ADDRESS
         networks:
             meet.jitsi:
                 aliases:
@@ -100,6 +103,9 @@ services:
             - JWT_TOKEN_AUTH_MODULE
             - LOG_LEVEL
             - TZ
+            - TURN_ENABLE
+            - TURN_SECRET
+            - LETSENCRYPT_DOMAIN
         networks:
             meet.jitsi:
                 aliases:
