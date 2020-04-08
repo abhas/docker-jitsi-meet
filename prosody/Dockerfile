@@ -11,8 +11,8 @@ RUN \
     && echo "deb-src http://deb.debian.org/debian stretch main contrib non-free" >> /etc/apt/sources.list.d/libssl.list \
     && echo "APT::Default-Release \"buster\";" >> /etc/apt/apt.conf.d/20libssl \
     && apt-dpkg-wrap apt-get update \
+    && apt-dpkg-wrap apt-get install -y prosody \
     && apt-dpkg-wrap apt-get install -t stretch-backports -y \
-      prosody \
       liblua5.2-dev \
       sasl2-bin \
       libsasl2-modules-ldap \
