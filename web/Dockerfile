@@ -5,7 +5,8 @@ COPY rootfs/ /
 
 RUN \
 	apt-dpkg-wrap apt-get update && \
-	apt-dpkg-wrap apt-get install -y cron nginx-extras jitsi-meet-web && \
+	apt-dpkg-wrap apt-get install -y -t stretch-backports nginx-extras && \
+	apt-dpkg-wrap apt-get install -y cron jitsi-meet-web && \
 	apt-dpkg-wrap apt-get install -y -t stretch-backports certbot && \
 	apt-dpkg-wrap apt-get install -y vim coturn && \
 	apt-dpkg-wrap apt-get -d install -y jitsi-meet-web-config && \
